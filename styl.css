@@ -1,0 +1,225 @@
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: 'Questrial', sans-serif;
+}
+
+:root {
+    --slide-duration: 1s;
+
+    --pattern-bright: #fafafa;
+    --patern-dark: #151515;
+    --pattern-light-dark: #1e1e1e;
+
+    --pattern-gradient-1: #00855b;
+    --pattern-gradient-2: #FFAE00F2;
+    --pattern-gradient-3: #968a2c;
+    --pattern-gradient-red: #DC143CFF;
+
+    --scroll-button-width: 100px;
+    --scroll-button-height: 150px;
+}
+
+body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: var(--pattern-bright);
+}
+
+#container {
+    overflow-x: hidden;
+    z-index: 999;
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    height: 300vh;
+}
+
+#background {
+    transition: var(--slide-duration) cubic-bezier(.75,0,.35,1);
+    z-index: -1;
+    position: fixed;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+#main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    padding: 1rem;
+    width: 90%;
+    height: 10vh;
+    border: 1px solid #000;
+}
+
+.main-header-links {
+    transition: 0.3s;
+    padding: 1rem;
+    height: 100%;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+    color: var(--patern-dark);
+    text-decoration: none;
+}
+
+#menu-links {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+}
+#menu-links :where(:nth-child(1), :nth-child(2), :nth-child(3)) {
+
+}
+.header-links-line {
+    border: 1px solid rgba(21, 21, 21, 0.6);
+    transition: 0.25s ease-in-out;
+    visibility: hidden;
+    float: right;
+    width: 5%;
+    height: 1px;
+}
+.main-header-links:hover .header-links-line {
+    visibility: visible;
+    width: 100%;
+    float: left;
+}
+
+#header-links-line-home {
+    border: 1px solid rgba(21, 21, 21, 0.6);
+    transition: 0.25s ease-in-out;
+    float: left;
+    width: 50%;
+    height: 1px;
+}
+.main-header-links:hover #header-links-line-home {
+    width: 100%;
+}
+
+#main-content {
+    z-index: 998;
+    display: flex;
+    justify-content: left;
+    align-items: flex-end;
+    text-align: left;
+    margin: 0 auto;
+    padding: 1.25rem;
+    width: 90%;
+    height: 90vh;
+}
+
+#content-title {
+    line-height: 2rem;
+    cursor: default;
+    font-size: 112px;
+}
+#content-title h1 {
+    cursor: default;
+    transition: 1s ease-in-out;
+    font-size: 112px;
+}
+#content-title:nth-child(n) {
+    transition: 1s ease-in-out;
+}
+
+#about-content {
+    z-index: -1;
+    border: 1px solid #000;
+    position: relative;
+    padding: 1.25rem;
+    margin: 0 auto;
+    top: -20vh;
+    height: 90vh;
+    width: 90%;
+    font-size: 80px;
+}
+
+#about-title {
+    opacity: 0;
+    transition: 0.75s ease-in-out;
+}
+
+#scroll-button {
+    transition: 0.3s linear;
+    z-index: 999;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    top: calc(95% - var(--scroll-button-height));
+    left: calc(97.5% - var(--scroll-button-width));
+    width: var(--scroll-button-width);
+    height: var(--scroll-button-height);
+    border: 1px solid #000;
+    background: transparent;
+}
+#line {
+    z-index: 991;
+    transition: 0.3s linear;
+    position: absolute;
+    width: 1px;
+    height: 90%;
+    background-color: #fff;
+}
+#dot {
+    transition: 0.3s linear;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 992;
+    position: absolute;
+    background-color: transparent;
+    backdrop-filter: blur(15px);
+    border: 1px solid #fff;
+    border-radius: 50%;
+}
+#dot:hover {
+    background-color: #000;
+}
+
+/* Sliders */
+
+.slideDefine {
+    transition: var(--slide-duration) cubic-bezier(.75,0,.35,1);
+    position: absolute;
+    animation:slide 15s ease-in-out infinite alternate;
+    background: linear-gradient(-60deg, var(--pattern-gradient-1) 50%, var(--pattern-gradient-2) 50%) no-repeat fixed center;
+    bottom:0;
+    left:-50%;
+    opacity:.5;
+    right:-50%;
+    top:0;
+}
+
+#slide-2 {
+    animation-direction:alternate-reverse;
+    animation-duration:10s;
+}
+
+#slide-3 {
+    animation-duration:7.5s;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(-25%);
+    }
+    50% {
+        transform: translate(0%) skew(60deg);
+    }
+    100% {
+        transform: translateX(25%);
+    }
+}

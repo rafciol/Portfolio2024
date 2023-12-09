@@ -1,0 +1,16 @@
+/*document.addEventListener('scroll', function (){
+    let prevScroll = currentScroll;
+    currentScroll = window.scrollY;
+
+    if (prevScroll > currentScroll) {
+        console.log('up');
+        console.log(currentScroll);
+    } else {
+        console.log('down');
+        console.log(currentScroll);
+    }
+});*/
+
+/*sliders.forEach(function (elem){
+    elem.style.height = background_height + 'vh';
+})*/

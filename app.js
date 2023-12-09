@@ -13,7 +13,6 @@ let bg_height = 100.0;
 background.style.height = bg_height + 'vh';
 
 let scrolled = false;
-let scrolledFine = true;
 function scrollAtOnce() {
     if (scrolled === false) {
         contentAbout.scrollIntoView({behavior: "instant", block: "center"});

@@ -12,6 +12,7 @@ let aboutTitle = document.getElementById('about-title');
 let bg_height = 100.0;
 background.style.height = bg_height + 'vh';
 
+console.log("hello git");
 let scrolled = false;
 function scrollAtOnce() {
     if (scrolled === false) {

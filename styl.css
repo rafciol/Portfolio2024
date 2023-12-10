@@ -7,18 +7,20 @@
 }
 
 :root {
+    --canvas-width: 90%;
     --slide-duration: 1s;
 
     --pattern-bright: #fafafa;
     --patern-dark: #151515;
     --pattern-light-dark: #1e1e1e;
+    --pattern-light-gray: #808080;
 
-    --pattern-gradient-1: #00855b;
-    --pattern-gradient-2: #FFAE00F2;
-    --pattern-gradient-3: #968a2c;
+    --pattern-gradient-1: #00855b; /* #00855b */
+    --pattern-gradient-2: #FFAE00F2; /* #FFAE00F2 */
+    --pattern-gradient-3: #968a2c; /* #968a2c */
     --pattern-gradient-red: #DC143CFF;
 
-    --scroll-button-width: 100px;
+    --scroll-button-width: 50px;
     --scroll-button-height: 150px;
 }
 
@@ -36,28 +38,35 @@ body {
     margin: 0 auto;
     padding: 0;
     width: 100%;
-    height: 300vh;
+    height: 300svh;
 }
 
 #background {
     transition: var(--slide-duration) cubic-bezier(.75,0,.35,1);
     z-index: -1;
-    position: fixed;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     width: 100%;
+    background-color: transparent;
+}
+#canvas {
+    margin-top: 5%;
+    position: static;
+    width: 90%;
+    height: calc(var(--canvas-width)/1.4);
 }
 
 #main-header {
     display: flex;
+    position: fixed;
     justify-content: space-between;
     align-items: center;
     margin: 0 auto;
     padding: 1rem;
     width: 90%;
     height: 10vh;
-    border: 1px solid #000;
+    left: 5%;
 }
 
 .main-header-links {
@@ -65,7 +74,7 @@ body {
     padding: 1rem;
     height: 100%;
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 0.1rem;
     color: var(--patern-dark);
     text-decoration: none;
@@ -73,9 +82,9 @@ body {
 
 #menu-links {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    width: 30%;
+    width: 25%;
     height: 100%;
 }
 #menu-links :where(:nth-child(1), :nth-child(2), :nth-child(3)) {
@@ -110,46 +119,38 @@ body {
     z-index: 998;
     display: flex;
     justify-content: left;
-    align-items: flex-end;
+    flex-direction: column;
+    align-items: center;
     text-align: left;
     margin: 0 auto;
     padding: 1.25rem;
-    width: 90%;
-    height: 90vh;
+    width: 100%;
+    height: 100vh;
 }
 
 #content-title {
+    transition: 0.3s ease-in-out;
+    width: 90%;
     line-height: 2rem;
     cursor: default;
-    font-size: 112px;
 }
 #content-title h1 {
     cursor: default;
     transition: 1s ease-in-out;
-    font-size: 112px;
+    font-size: 100px; /* 100 */
+}
+#content-title h1:nth-child(2) {
+    font-size: 95px!important; /* 95 */
+}
+#content-title h1:nth-child(3) {
+    font-size: 90px!important; /* 90 */
 }
 #content-title:nth-child(n) {
     transition: 1s ease-in-out;
 }
 
-#about-content {
-    z-index: -1;
-    border: 1px solid #000;
-    position: relative;
-    padding: 1.25rem;
-    margin: 0 auto;
-    top: -20vh;
-    height: 90vh;
-    width: 90%;
-    font-size: 80px;
-}
-
-#about-title {
-    opacity: 0;
-    transition: 0.75s ease-in-out;
-}
-
 #scroll-button {
+    cursor: pointer;
     transition: 0.3s linear;
     z-index: 999;
     position: fixed;
@@ -158,19 +159,21 @@ body {
     align-items: center;
     text-align: center;
     top: calc(95% - var(--scroll-button-height));
-    left: calc(97.5% - var(--scroll-button-width));
+    left: calc(95% - var(--scroll-button-width));
     width: var(--scroll-button-width);
     height: var(--scroll-button-height);
-    border: 1px solid #000;
     background: transparent;
+}
+#scroll-button:hover #dot {
+    background-color: var(--pattern-light-dark);
 }
 #line {
     z-index: 991;
-    transition: 0.3s linear;
+    transition: 0.25s linear;
     position: absolute;
     width: 1px;
     height: 90%;
-    background-color: #fff;
+    background-color: var(--pattern-light-dark);
 }
 #dot {
     transition: 0.3s linear;
@@ -181,45 +184,87 @@ body {
     z-index: 992;
     position: absolute;
     background-color: transparent;
-    backdrop-filter: blur(15px);
-    border: 1px solid #fff;
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--pattern-light-dark);
     border-radius: 50%;
 }
-#dot:hover {
-    background-color: #000;
-}
-
-/* Sliders */
-
-.slideDefine {
-    transition: var(--slide-duration) cubic-bezier(.75,0,.35,1);
+#scroll-button-text {
+    transition: 0.5s ease-in-out;
     position: absolute;
-    animation:slide 15s ease-in-out infinite alternate;
-    background: linear-gradient(-60deg, var(--pattern-gradient-1) 50%, var(--pattern-gradient-2) 50%) no-repeat fixed center;
-    bottom:0;
-    left:-50%;
-    opacity:.5;
-    right:-50%;
-    top:0;
+    width: 150px;
+    font-weight: 500;
+    letter-spacing: 0.075rem;
+    transform: translateX(-35%) translateY(60px);
+}
+#scroll-button-text img {
+    transition: 0.5s ease-in-out;
+    width: 15px;
+    height: 15px;
 }
 
-#slide-2 {
-    animation-direction:alternate-reverse;
-    animation-duration:10s;
+#makeTitle {
+    display: inline-block;
 }
 
-#slide-3 {
-    animation-duration:7.5s;
+#about-content {
+    z-index: -1;
+    padding-top: 10rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    margin: 0 auto;
+    height: 100vh;
+    width: 90%;
 }
 
-@keyframes slide {
-    0% {
-        transform: translateX(-25%);
-    }
-    50% {
-        transform: translate(0%) skew(60deg);
-    }
-    100% {
-        transform: translateX(25%);
-    }
+#about-title {
+    opacity: 0;
+    font-size: 80px;
+    transition: 0.75s ease-in-out;
+}
+#about-text-title {
+    font-size: 36px;
+    transition: 0.75s ease-in-out;
+}
+
+.about-texts-subtitle-define {
+    font-size: 16px!important;
+    color: var(--pattern-light-gray)!important;
+}
+
+#about-box {
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    margin-top: 5rem;
+    padding: 1rem;
+}
+#about-skills {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    width: 25%;
+    padding: 1rem;
+    border: 1px solid #000;
+    text-align: left;
+}
+#about-skills h1:where(:nth-child(3), :nth-child(4)) {
+    margin-bottom: 0;
+}
+.about-texts-skills {
+    font-weight: 600;
+    margin-top: 1mm;
+    margin-bottom: 1mm;
+    font-size: 20px;
+}
+
+#about-text {
+    width: 25%;
+    padding: 1rem;
+    border: 1px solid #000;
+    text-align: left;
+    color: var(--pattern-light-dark);
+    font-size: 18px;
+    transition: 0.75s ease-in-out;
 }

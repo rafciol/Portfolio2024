@@ -7,7 +7,6 @@
         https://liftedlogic.com/
         https://www.rezo-zero.com/
         https://essams.com/index.html
-
     -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -31,10 +30,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://kit.fontawesome.com/2a74fa073f.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!--<script type="module" src="js/main.js"></script>-->
     <title>Porfolio - Dorian Namyslak</title>
 </head>
 <body>
+    <div id="clicked-menu-container">
+        <main id="clicked-menu">
+            <a href="index.html" class="clicked-menu-links">Home</a>
+            <a href="about" class="clicked-menu-links">About me</a>
+            <a href="projects" class="clicked-menu-links">Projects</a>
+            <a href="contact" class="clicked-menu-links">Contact</a>
+        </main>
+    </div>
     <span id="scroll-button">
         <span id="line"></span>
         <div id="dot"></div>
@@ -42,17 +51,21 @@
     </span>
     <div id="container">
         <header id="main-header">
-            <a href="home" class="main-header-links">Home<hr id="header-links-line-home"></a>
+            <a href="index.html" id="main-header-home" title="Go back to home">Home<hr id="header-links-line-home"></a>
             <section id="menu-links">
-                <a href="about" class="main-header-links">About<hr class="header-links-line"></a>
-                <a href="projects" class="main-header-links">Projects<hr class="header-links-line"></a>
-                <a href="contact" class="main-header-links">Contact<hr class="header-links-line"></a>
+                <a class="main-header-links" onclick="aboutSection()" title="About me">About<hr class="header-links-line"></a>
+                <a class="main-header-links" title="My projects">Projects<hr class="header-links-line"></a>
+                <a class="main-header-links" title="Contact me">Contact<hr class="header-links-line"></a>
+                <a class="main-header-links" id="talk" title="Talk with me">Let's talk</a>
+                <span id="hamburger-menu" title="Click to show menu">
+                    <span class="hamburger-lines"></span>
+                    <span class="hamburger-lines"></span>
+                    <span class="hamburger-lines"></span>
+                </span>
             </section>
         </header>
         <main id="main-content">
-            <div id="background">
-                <canvas id="canvas"></canvas>
-            </div>
+            <div id="background"></div>
             <div id="content-title">
                 <h1 id="content-title-line-1">I make websites for <span id="makeTitle">business</span></h1>
                 <h1 id="content-title-line-2">Turn your vision into reality</h1>
@@ -60,24 +73,31 @@
             </div>
         </main>
         <section id="about-content">
-            <h1 id="about-title">About me</h1>
-            <p id="about-text-title">Hi! My name is Dorian</p>
-            <div id="about-box">
-                <aside id="about-skills">
-                    <p class="about-texts-subtitle-define">Skills</p>
-                    <span class="about-texts-skills">Web design</span>
-                    <span class="about-texts-skills">UX/UI Design</span>
-                    <span class="about-texts-skills">Front End</span>
-                </aside>
-                <main id="about-text">
-                    <p class="about-texts-subtitle-define">About</p>
-                    <p>I'm a passionate web developer based in Poland. Web development has been my passion since a 14 years old. I code in Html, Css, JavaScript, Php and others. </p>
-                </main>
+            <aside id="about-box-img"></aside>
+            <main id="about-box-main">
+                <div id="about-title">
+                    <p class="about-box-paragraphs">About me</p>
+                </div>
+                <div id="about-subtitle">
+                    <p class="about-box-paragraphs">Cześć! Mam na imię Dorian.</p>
+                </div>
+                <div id="about-text-title">
+                    <p class="about-box-paragraphs">Zajmuję się tworzeniem stron WWW od strony front end'u od 14 roku życia. Fascynuję mnie tworzenie stron internetowych i sprawia mi to frajdę. UX/UI to są główne obszary w, których pracuję i zdobywam doświadczenie.</p>
+                </div>
+                <hr>
+            </main>
+        </section>
+        <section id="projects-content">
+            <div class="projects-define"></div>
+            <div class="projects-define">
+                <h1 id="projects-title">My projects</h1>
             </div>
+            <div class="projects-define"></div>
+            <div class="projects-define"></div>
         </section>
     </div>
-    <!--<script type="module" src="js/main.js"></script>-->
     <script src="app.js" async></script>
     <script src="js/animation.js" async></script>
+    <script>AOS.init();</script>
 </body>
 </html>

@@ -3,16 +3,16 @@ const cx = canvas.getContext('2d');
 
 const increment = 12345;
 const multiplier = 11234611;
-const modulus = Math.pow(2, 31);
+const modulus = Math.floor(Math.pow(2, 31));
 
 let stepX = 32
     , stepY = 32
     , sizeX = 1
     , sizeY = 1
-    , marginTop = 1
-    , marginBottom = 1
-    , marginLeft = 1
-    , marginRight = 1;
+    , marginTop = 0
+    , marginBottom = 0
+    , marginLeft = 0
+    , marginRight = 0;
 
 let frameID;
 
@@ -44,7 +44,7 @@ function frame(frameTime) {
             const distX = randomValue * 16;
             const distY = randomValue * 16;
             const phase = randomValue * Math.PI * 2;
-            cx.fillStyle = '#)'
+            cx.fillStyle = '#1e1e1e'
             cx.fillRect(
                 x,
                 y,

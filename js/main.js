@@ -69,3 +69,51 @@ document.onmousemove = (e) => {
 }
 
 animate();
+
+// saves
+function createBackgroundAnimation() {
+    let squaresArray = [];
+    const countOfSquares = 200; //264
+    const size = '100px';
+
+    for (let i = 1; i <= countOfSquares; i++) {
+        let square = document.createElement('div');
+        square.style.width = size;
+        square.style.height = size;
+
+        background.appendChild(square);
+        squaresArray.push(square);
+    }
+
+    function cursorEvent(e) {
+        if(checkOnScroll === false) {
+            const { clientX, clientY } = e;
+            const rgbStartValue = 225;
+
+            squaresArray.forEach(function (elem) {
+                const rect = elem.getBoundingClientRect();
+                const elemX = rect.left + rect.width / 2;
+                const elemY = rect.top + rect.height / 2;
+
+                //const distance = Math.sqrt(Math.pow(clientX - elemX, 2) + Math.pow(clientY - elemY, 2));
+                const maxDistance = Math.sqrt(Math.pow(window.innerWidth / 2, 2) + Math.pow(window.innerHeight / 2, 2));
+
+                let distanceX = e.clientX - elemX;
+                let distanceY = e.clientY - elemY;
+
+                const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+
+                let fillPercentage = 75 - (distance / maxDistance) * 100;
+                fillPercentage = Math.max(fillPercentage, 0);
+                fillPercentage = Math.min(fillPercentage, 100);
+
+                const angle = Math.atan2(distanceY, distanceX);//Math.atan2(clientY - elemY, clientX - elemX);
+                const angleDegrees = angle * (180 / Math.PI);
+
+                elem.style.backgroundImage = `linear-gradient(${angleDegrees}deg, rgba(${rgbStartValue - fillPercentage}, ${rgbStartValue - fillPercentage}, ${rgbStartValue - fillPercentage}, 0.75) ${fillPercentage}%, transparent 0%)`;
+            });
+        }
+    }
+
+    document.addEventListener('mousemove', cursorEvent);
+}

@@ -1,0 +1,79 @@
+@media screen and (max-width: 1500px) and (min-width: 1200px) {
+
+    /* Main content */
+
+    #content-title h1:nth-child(1) {
+        font-size: 90px!important;
+    }
+    #content-title h1:nth-child(3) {
+        font-size: 24px!important;
+        margin-top: 30%;
+    }
+
+    /* About section */
+
+    #about-box-main {
+        justify-content: left;
+        align-items: flex-start;
+        margin: 0;
+        padding: 0;
+        width: 95%;
+    }
+    .about-box-paragraphs {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        margin: 1% 0 1% 5%;
+        width: 50%;
+    }
+
+    /* Working section */
+
+    .working-text-titles {
+        margin: 0;
+        width: 100%;
+        font-size: 128px;
+        text-align: left;
+    }
+
+    /* Project section */
+
+
+
+    /* Contact section */
+
+    #contact-form {
+        width: 95%;
+    }
+    .contact-form-input-boxes {
+        width: 90%;
+    }
+    .contact-form-input-boxes textarea {
+        width: 90%;
+    }
+
+    /* Footer */
+
+    #main-footer-container {
+        width: calc(95% - 2.5rem);
+    }
+    .footer-cons {
+        width: 33%
+    }
+
+    /* Others */
+
+    #clicked-menu {
+        justify-content: center;
+        align-items: center;
+        text-align: left;
+    }
+    .clicked-menu-links {
+        width: 100%;
+    }
+    .clicked-menu-bg-slide {
+        justify-content: left;
+        text-align: left;
+    }
+
+}

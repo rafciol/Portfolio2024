@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pl">
+<html lang="en" xml:lang="en">
 <head>
     <!-- Inspirations:
         https://28k.studio/
@@ -14,9 +14,14 @@
         https://chriskalafatis.com/
         https://searchminds.se/
         https://www.loicbrijawi.com/
+        https://cssloaders.github.io/
+        https://www.filipbenda.com/
+        https://www.atom63.io/
+        https://camillemormal.com/
+        https://www.ewan-kerboas.fr/
     -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, shrink-to-fit=no">
     <meta property="og:description" content="Dorian Namyslak - portfolio, Intuitive, Innovate, Design. I make websites for business, freelancers, personal.">
     <meta name="description" content="Dorian Namyslak - portfolio, Intuitive, Innovate, Design. I make websites for business, freelancers, personal.">
     <meta property="og:locale" content="pl_PL">
@@ -32,7 +37,8 @@
     <meta name="googlebot-news" content="index, follow">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="styl.css">
-    <link rel="stylesheet" href="loadersAnimation.css">
+    <link rel="stylesheet" href="css/loadersAnimation.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <link rel="icon" href="" type="">
     <link rel="x-icon" href="" type="">
     <link rel="shortcut icon" href="">
@@ -40,13 +46,15 @@
     <link rel="logo" type="image/png" href="">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Petrona&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/2a74fa073f.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css" />
-    <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting-cells.css" />
-    <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+    <script src="https://kit.fontawesome.com/2a74fa073f.js" crossorigin="anonymous"></script>
     <script src="js/hoverEvents.js" async></script>
+    <script src="js/deviceCheck.js" async></script>
     <!--<script src="https://threejs.org/build/three.js"></script>-->
     <!--<script src="js/modelRender.js" type="module"></script>-->
     <!--<script src="js/animation.js" async></script>-->
@@ -56,27 +64,40 @@
 <body>
 <span class="pointer circle"></span>
 <span class="pointer dot"></span>
+    <div id="loading-screen">
+        <h1 id="quote"></h1>
+        <article id="progress-bar">
+            <span id="progress-bar-content"></span>
+        </article>
+    </div>
     <div id="clicked-menu-container">
         <main id="clicked-menu">
-            <a class="clicked-menu-links" onclick="homeSectionFromHamMenu()">Home</a>
-            <a class="clicked-menu-links" onclick="aboutSectionFromHamMenu()">O mnie</a>
-            <a class="clicked-menu-links" onclick="projectsSectionFromHamMenu()">Projekty</a>
-            <a class="clicked-menu-links" onclick="contactSectionFromHamMenu()">Kontakt</a>
+            <div class="clicked-menu-bg-slide clicked-menu-links" onclick="homeSectionFromHamMenu()">
+                <span class="clicked-menu-bg-slide-content">Home</span>
+            </div>
+            <div class="clicked-menu-bg-slide clicked-menu-links" onclick="aboutSectionFromHamMenu()">
+                <span class="clicked-menu-bg-slide-content">About</span>
+            </div>
+            <div class="clicked-menu-bg-slide clicked-menu-links" onclick="projectsSectionFromHamMenu()">
+                <span class="clicked-menu-bg-slide-content">My work</span>
+            </div>
+            <div class="clicked-menu-bg-slide clicked-menu-links" onclick="workingSectionFromHamMenu()">
+                <span class="clicked-menu-bg-slide-content">Experience</span>
+            </div>
+            <div class="clicked-menu-bg-slide clicked-menu-links" onclick="contactSectionFromHamMenu()">
+                <span class="clicked-menu-bg-slide-content">Contact</span>
+            </div>
         </main>
     </div>
-    <span id="scroll-button">
+    <nav id="scroll-button">
         <span id="line"></span>
         <div id="dot"></div>
         <span id="scroll-button-text">Scroll &#8595;</span>
-    </span>
-    <div id="container">
+    </nav>
+    <div id="container" class="container">
         <header id="main-header">
-            <a href="index.html" id="main-header-home" title="Go back to home">Dorian Namyslak<hr id="header-links-line-home"></a>
+            <a href="index.html" id="main-header-home" title="">Portfolio.<hr id="header-links-line-home"></a>
             <section id="menu-links">
-                <a class="main-header-links" onclick="aboutSection()" title="About me">O mnie<hr class="header-links-line"></a>
-                <a class="main-header-links" onclick="projectsSection()" title="My projects">Projekty<hr class="header-links-line"></a>
-                <a class="main-header-links" onclick="contactSection()" title="Contact me">Kontakt<hr class="header-links-line"></a>
-                <a class="main-header-links" onclick="contactSection()" id="talk" title="Talk with me">Let's talk &#8594;</a>
                 <span id="hamburger-menu" title="Click to show menu">
                     <span class="hamburger-lines"></span>
                     <span class="hamburger-lines"></span>
@@ -84,90 +105,70 @@
             </section>
         </header>
         <main id="main-content">
-            <div id="background"></div>
+            <div id="background" draggable="false">
+               <div id="photo"></div>
+            </div>
             <div id="content-title">
                 <h1 id="content-title-line-1">
-                    I make websites for <span id="makeTitle">business</span>
-                    <div class="loader-container scrolling">
-                        <div class="animated">&lt;</div>
-                        <div class="loader">/</div>
-                        <div class="animated">&gt;</div>
-                    </div>
+                    <span class="content-title-line-collapse-left">I'm</span>Dorian Namyślak
                 </h1>
                 <h1 id="content-title-line-2">
-                    <span class="scrolling" id="rocketLaunch">
-                        <span class="loader-rocket scrolling">
-                            <span class="loader-rocket-wing"></span>
-                            <span class="loader-rocket-fire"></span>
-                        </span>
-                    </span>
-                    Turn your vision into reality
+                    FRONTEND<span class="content-title-line-collapse-right"> developer based <br>in Poland.</span>
                 </h1>
-                <h1 id="content-title-line-3"><span class="loader-spirits scrolling"></span>Intuitive. <span class="loader-glob scrolling"></span>Innovate. <span class="loader-img scrolling"></span>Design.</h1>
-                <span id="content-subtitle"></span>
+                <h1 id="content-title-line-3">
+                    I make intuitive & creative websites from passion
+                    <div class="scroll-down" id="scroll-down">
+                        <span class="scroll-down-content">Continue &#8595;</span>
+                    </div>
+                </h1>
             </div>
         </main>
         <section id="about-content">
-            <aside id="about-box-img">
-            </aside>
-            <main id="about-box-main">
-                <div id="about-title">
-                    <p class="about-box-paragraphs" id="about-title-p">About me</p>
-                </div>
-                <div id="about-subtitle">
-                    <p class="about-box-paragraphs" id="about-subtitle-p">Cześć! Mam na imię Dorian.</p>
-                </div>
-                <div id="about-text-title">
-                    <p class="about-box-paragraphs" id="about-text-title-p">Zajmuję się tworzeniem stron WWW od strony front end'u od 14 roku życia. Fascynuję mnie tworzenie stron internetowych i sprawia mi to frajdę. UX/UI to są główne obszary w, których pracuję i zdobywam doświadczenie.</p>
-                </div>
-            </main>
-        </section>
-        <section id="projects-parent">
-            <section id="projects-content" class="projects-contents">
-                <h1 id="projects-title">My projects</h1>
-                <div class="projects-img-con">
-                    <figure id="projects-first" class="projects-define">
-                    <span class="projects-hover-text">
-                        <h1>Przestrzeń</h1>
-                        <h3>2024</h3>
-                    </span>
-                    </figure>
-                </div>
-            </section>
-            <section id="projects-content-2" class="projects-contents">
-                <div id="projects-second" class="projects-define">
-                <span class="projects-hover-text">
-                    <h1>Fauna service</h1>
-                    <h3>2021</h3>
-                </span>
-                </div>
-            </section>
-            <section id="projects-content-3" class="projects-contents">
-                <div id="projects-third" class="projects-define">
-                <span class="projects-hover-text">
-                    <h1>Old portfolio</h1>
-                    <h1>2020</h1>
-                </span>
-                </div>
-            </section>
-            <section id="projects-content-4" class="projects-contents">
-                <div id="projects-fourth" class="projects-define">
-                <span class="projects-hover-text">
-                    <h1>Project</h1>
-                    <h1>2022</h1>
-                </span>
-                </div>
-            </section>
+            <div id="about-container">
+                <h1 id="about-section-title">About</h1>
+                <main id="about-box-main">
+                    <div id="about-photo"></div>
+                    <article id="about-main-text">
+                        <p id="about-title-p"><span class="title-hr"></span> Who am I?</p>
+                        <p id="about-subtitle-p">Frontend developer</p>
+                        <p class="about-box-paragraphs">I have been doing front end development since I was 14 years old.<br> I started on my own, in my home from books and internet.</p>
+                        <p class="about-box-paragraphs">Now I create innovative, intuitive, design-oriented and unique websites. I am fascinated by creating new solutions.</p>
+                        <p class="about-box-paragraphs">UX/UI are the main areas in which I work, educate myself and gain experience. I have many successful projects to my credit.</p>
+                        <p class="about-box-skills">
+                            <span class="skills-hr"></span>HTML
+                            <span class="skills-hr"></span>CSS
+                            <span class="skills-hr"></span>JS
+                        </p>
+                    </article>
+                </main>
+            </div>
         </section>
         <section id="working-content">
-            <h1 id="working-title">Working in</h1>
-            <div id="image-tracker"></div>
-            <main id="working-con">
-                <h1>Web development</h1>
-                <h1>Motion development</h1>
-                <h1>UX/UI</h1>
-                <h1>Responsive web design</h1>
-                <h1>API</h1>
+            <div id="working-con">
+                <h1 id="working-title">Experience</h1>
+                <main id="working-text">
+                    <h1 class="working-text-titles">Web development</h1>
+                    <h1 class="working-text-subtitles">I build intuitive, innovate websites for business, freelancers and more...</h1>
+                    <h1 class="working-text-titles">User Experience</h1>
+                    <h1 class="working-text-subtitles">Creating unique and magical animations for amazing experience.</h1>
+                    <h1 class="working-text-titles">User Interface</h1>
+                    <h1 class="working-text-subtitles">Best solutions for clean and smooth interface.</h1>
+                    <h1 class="working-text-titles">Responsive design</h1>
+                    <h1 class="working-text-subtitles">Mobile, computer? Does not matter!, it works on other devices.</h1>
+                </main>
+            </div>
+        </section>
+        <section id="projects-parent" draggable="false">
+            <h1 id="project-title">My work</h1>
+            <main id="project-content" data-mouse-down-at="0" data-prev-percentage="0" draggable="false">
+                <div class="project-box" draggable="false"></div>
+                <div class="project-box" draggable="false"></div>
+                <div class="project-box" draggable="false"></div>
+                <div class="project-box" draggable="false"></div>
+                <div class="project-box" draggable="false"></div>
+                <div class="project-box" draggable="false"></div>
+                <div class="project-box" draggable="false"></div>
+                <div class="project-box" draggable="false"></div>
             </main>
         </section>
         <section id="contact-content">
@@ -177,12 +178,12 @@
                         <h1 id="contact-form-title">Let's work together!</h1>
                         <figure id="contact-form-info-content">
                             <p>
-                                Chcesz się ze mną skontaktować?<br>
-                                Wypełnij formularz lub napisz bezpośrednio.
+                                Would you like to contact me?<br>
+                                Fill out the form or write directly.
                             </p>
                             <p>
                                 Email: <a href="mailto:dorian.programista15@gmail.com" class="contact-info-links">dorian.programista15@gmail.com</a><br>
-                                Tel. kontaktowy: <a class="contact-info-links">+48 698 380 660</a>
+                                Phone: <a class="contact-info-links">+48 698 380 660</a>
                             </p>
                             <div id="contact-opinions">
                             </div>
@@ -190,20 +191,16 @@
                     </aside>
                     <main id="contact-form-input" class="contact-form-box">
                         <figure id="contact-form-line" class="contact-form-input-boxes">
-                            <input type="text" id="contact-form-name" placeholder="Imię" required>
-                            <input type="email" id="contact-form-email" placeholder="Email" required>
+                            <input type="text" id="contact-form-name" placeholder="NAME" required>
+                            <input type="email" id="contact-form-email" placeholder="EMAIL" required>
                         </figure>
                         <figure id="contact-form-message" class="contact-form-input-boxes">
-                            <textarea id="contact-form-message-input" placeholder="Napisz coś!" required></textarea>
+                            <textarea id="contact-form-message-input" placeholder="MESSAGE..." required></textarea>
                         </figure>
                         <figure id="contact-form-type-box" class="contact-form-input-boxes">
-                            <select id="contact-form-type" title="Rodzaj wiadomości" required>
-                                <option>Współpraca</option>
-                                <option>Pytanie</option>
-                                <option>Opinia</option>
-                                <option>Inne</option>
-                            </select>
-                            <input id="contact-form-send" type="submit" placeholder="Wyślij">
+                            <div class="scroll-down">
+                                <input id="contact-form-send" class="scroll-down-content" type="submit" placeholder="SEND">
+                            </div>
                         </figure>
                     </main>
                 </form>
@@ -213,16 +210,16 @@
                     <aside id="footer-rights" class="footer-cons"><a href="https://en.wikipedia.org/wiki/All_rights_reserved">&#169; All rights reserved</a></aside>
                     <main id="footer-links" class="footer-cons">
                         <figure class="footer-links-con">
-                            <a href="https://www.behance.net/doriannamylak" target="_blank">Behance<hr class="header-links-line"></a>
-                            <a href="https://www.linkedin.com/in/dorian-namyślak-6874392a6/" target="_blank">Linkedin<hr class="header-links-line"></a>
+                            <a href="https://www.behance.net/doriannamylak" target="_blank" title="Behance"></a>
+                            <a href="https://www.linkedin.com/in/dorian-namyślak-6874392a6/" target="_blank" title="Linkedin"></a>
                         </figure>
                         <figure class="footer-links-con">
-                            <a title="rafciolson#7994" target="_blank">Discord<hr class="header-links-line"></a>
-                            <a href="https://www.instagram.com/dorian_namys/" target="_blank">Instagram<hr class="header-links-line"></a>
+                            <a title="rafciolson#7994" target="_blank"></a>
+                            <a href="https://www.instagram.com/dorian_namys/" target="_blank" title="Instagram"></a>
                         </figure>
                         <figure class="footer-links-con">
-                            <a href="mailto:dorianprogramista15@gmail.com" target="_blank">Email<hr class="header-links-line"></a>
-                            <a href="https://github.com/rafciol" target="_blank">Github<hr class="header-links-line"></a>
+                            <a href="mailto:dorianprogramista15@gmail.com" target="_blank" title="Mail"></a>
+                            <a href="https://github.com/rafciol" target="_blank" title="Github"></a>
                         </figure>
                     </main>
                     <aside id="footer-back-top" class="footer-cons">

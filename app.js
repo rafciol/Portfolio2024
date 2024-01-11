@@ -3,25 +3,9 @@ let hamburger = document.getElementById('hamburger-menu');
 
 let lines = document.querySelectorAll('#content-title :nth-child(n)');
 let mainHeaderLinks = document.querySelectorAll('.main-header-links');
-let menuLinks = document.getElementById('menu-links');
 let mainHeader = document.getElementById('main-header');
 
 let aboutContent = document.getElementById('about-content')
-let aboutBoxPortrait = document.getElementById('about-box-img');
-let aboutTitle = document.getElementById('about-title');
-let aboutSubtitle = document.getElementById('about-subtitle');
-let aboutText = document.getElementById('about-text-title');
-let aboutArray = [aboutBoxPortrait, aboutTitle, aboutSubtitle, aboutText];
-
-let mainContent = document.getElementById('main-content');
-let contentTitle = document.getElementById('content-title');
-
-let projectContent = document.getElementById('projects-content');
-let projectsFirst = document.getElementById('projects-first');
-let projectsSecond = document.getElementById('projects-second');
-let projectsThird = document.getElementById('projects-third');
-let projectsFourth = document.getElementById('projects-fourth');
-let projectsImgArray = [projectsFirst, projectsSecond, projectsThird, projectsFourth];
 
 let contactContent = document.getElementById('contact-content');
 let footerBackTop = document.getElementById('footer-back-top');
@@ -38,15 +22,18 @@ let hamLineArray = [hamFirstLine, hamSecondLine];
 let menuOnClick = document.getElementById('clicked-menu-container');
 let clickedMenu = document.getElementById('clicked-menu');
 
-let rocketLaunch = document.getElementById('rocketLaunch');
+let elements = document.querySelectorAll('.scrolling');
 
 let loaded = false;
+let scrollbutton = document.getElementById('scroll-button');
+let scrollDown = document.getElementById('scroll-down');
 
-let starArray = [];
+let loadingScreen = document.getElementById('loading-screen');
+let workingContent = document.getElementById('working-content');
+
 let starArrayMenu = [];
 
-const maxMovement = 30;
-const maxMovementEx = 100;
+let loader = document.querySelector('.loader');
 
 // Changing style after delay
 class styleSetterWithTransition {
@@ -86,22 +73,17 @@ function scrollAtTop() {
 // Move title on scroll to another section
 let checkOnScroll = false;
 function moveTitle() {
-    const changePosX1 = '-5%';
-    const changePosX2 = '5%';
-
-    const changeAngleX1 = '90deg';
-    const changeAngleX2 = '-90deg';
+    const changePosX = '-5%';
 
     if(checkOnScroll === true) {
-        line_1.style.transform = `translateX(${changePosX2}) rotateX(${changeAngleX2})`;
-        line_1.style.opacity = '0';
-       //line_2.style.transform = `translateX(${changePosX1}) rotateX(${changeAngleX1})`;
-        line_3.style.transform = `translateX(${changePosX2}) rotateX(${changeAngleX2})`;
-        line_3.style.opacity = '0';
+        lineArray.forEach(function (line) {
+            line.style.transform = `translateX(${changePosX})`;
+            line.style.opacity = '0';
+        });
     } else {
         lineArray.forEach(function (elem){
             elem.style.opacity = '1';
-            elem.style.transform = `translateX(0%) rotateX(0deg)`;
+            elem.style.transform = `translateX(0%)`;
         });
     }
 }
@@ -145,59 +127,6 @@ function scrollButton() {
     })
 }
 
-// Content title change text event
-function addContentTitleText() {
-    let getTitleText = document.getElementById('makeTitle');
-
-    let indicatorValue = 0;
-    const duration = 3500;
-    const durationInSec = duration/1000;
-
-    let rotationSet;
-    const rotationAngle = 'toTop';
-
-    switch (rotationAngle) {
-        case 'toTop':
-            rotationSet = 'rotateX(90deg)';
-            break;
-        case 'toDown':
-            rotationSet = 'rotateX(-90deg)';
-            break;
-    }
-
-    const keyframes = [
-        {transform: `rotateX(0)`, filter: 'blur(50px)'},
-        {transform: `${rotationSet}`, filter: 'blur(15px)', offset: 0.5},
-        {transform: `rotateX(0)`, filter: 'blur(0)'},
-    ]
-    const options = {
-        duration: 500,
-        iterations: 1,
-    }
-
-    getTitleText.style.animationDelay = `${durationInSec}s`;
-
-    setInterval(function (){
-        switch (indicatorValue) {
-            case 0:
-                getTitleText.animate(keyframes, options);
-                getTitleText.innerHTML = 'freelancers';
-                indicatorValue++;
-                break;
-            case  1:
-                getTitleText.animate(keyframes, options);
-                getTitleText.innerHTML = 'personal';
-                indicatorValue++;
-                break;
-            case 2:
-                getTitleText.animate(keyframes, options);
-                getTitleText.innerHTML = 'business';
-                indicatorValue = 0;
-                break;
-        }
-    }, duration);
-}
-
 // Header links on clip event
 function eventHeaderLinks() {
     if (checkOnScroll === true) {
@@ -213,17 +142,11 @@ function eventHeaderLinks() {
 
 // Hamburger menu on click links animation
 let hamMenuClicked = false;
-function onClickLinesAnimation() {
-    const lineWidth = hamFirstLine.offsetWidth;
-
-    hamSecondLine.style.transform = 'translateX(2.5rem)';
-    hamSecondLine.style.opacity = '0';
-
-    hamFirstLine.style.transform = `translateY(${lineWidth/1.75}px)`;
-    hamFirstLine.style.width = '100%';
-}
 
 // After clicked menu event
+const mainHeaderHome = document.getElementById('main-header-home');
+let spamTimer = 1500;
+let spamChecker = false;
 function hamburgerMenuInteract() {
     const widthIncrement = 100;
     const unit = 'svw';
@@ -231,45 +154,64 @@ function hamburgerMenuInteract() {
     let clickedMenuLinks = document.querySelectorAll('.clicked-menu-links');
 
     if (hamMenuClicked === false) {
-        let clickedMenuShow = new styleSetterWithTransition(clickedMenu, 'opacity', 1, 1);
-        let clickedMenuWidth = new styleSetterWithTransition(clickedMenu, 'width', '100%', 600);
-        clickedMenuShow.setStyle();
-        clickedMenuWidth.setStyle();
-        clickedMenu.style.display = 'flex';
+        if (spamChecker === false) {
+            spamChecker = true;
+            setTimeout(function () {
+                spamChecker = false;
+            }, spamTimer)
 
-        clickedMenuLinks.forEach(function (elem){
-            elem = new styleSetterWithTransition(elem, 'opacity', 1, 1100);
-            elem.setStyle();
-        });
-        starArrayMenu.forEach(function(star){
-            star = new styleSetterWithTransition(star, 'opacity', 1, 1300);
-            star.setStyle();
-        });
+            let clickedMenuShow = new styleSetterWithTransition(clickedMenu, 'opacity', 1, 1);
+            let clickedMenuWidth = new styleSetterWithTransition(clickedMenu, 'width', '100%', 600);
+            clickedMenuShow.setStyle();
+            clickedMenuWidth.setStyle();
+            clickedMenu.style.display = 'flex';
 
-        onClickLinesAnimation();
-        menuOnClick.style.width = `${widthIncrement}${unit}`;
-        hamMenuClicked = true;
+            mainHeader.style.backgroundColor = 'transparent';
+            mainHeaderHome.style.opacity = '0';
+
+            clickedMenuLinks.forEach(function (elem){
+                elem = new styleSetterWithTransition(elem, 'opacity', 1, 1100);
+                elem.setStyle();
+            });
+            starArrayMenu.forEach(function(star){
+                star = new styleSetterWithTransition(star, 'opacity', 1, 1300);
+                star.setStyle();
+            });
+
+            menuOnClick.style.width = `${widthIncrement}${unit}`;
+            hamMenuClicked = true;
+        }
     } else {
-        let clickedContainerHide = new styleSetterWithTransition(menuOnClick, 'width', 0, 850);
-        let clickedMenuHideDisplay = new styleSetterWithTransition(clickedMenu, 'display', 'none', 1200);
-        let clickedMenuHide = new styleSetterWithTransition(clickedMenu, 'width', '0%', 350);
+        if (spamChecker === false) {
+            spamChecker = true;
+            setTimeout(function () {
+                spamChecker = false;
+            }, spamTimer)
 
-        hamLineArray.forEach(function (elem){
-            elem.style.transform = 'none'
-            elem.style.opacity = '1';
-            elem.style.width = '100%';
-        });
-        clickedMenuLinks.forEach(function (elem) {
-            elem.style.opacity = '0';
-        });
-        starArrayMenu.forEach(function(star){
-            star.style.opacity = '0';
-        });
+            let clickedContainerHide = new styleSetterWithTransition(menuOnClick, 'width', 0, 850);
+            let clickedMenuHideDisplay = new styleSetterWithTransition(clickedMenu, 'display', 'none', 1200);
+            let clickedMenuHide = new styleSetterWithTransition(clickedMenu, 'width', '0%', 350);
 
-        clickedMenuHide.setStyle();
-        clickedContainerHide.setStyle();
-        clickedMenuHideDisplay.setStyle();
-        hamMenuClicked = false;
+            mainHeaderHome.style.opacity = '1';
+
+            clickedMenuLinks.forEach(function (elem) {
+                elem.style.opacity = '0';
+            });
+            starArrayMenu.forEach(function(star){
+                star.style.opacity = '0';
+            });
+
+            clickedMenuHide.setStyle();
+            clickedContainerHide.setStyle();
+            clickedMenuHideDisplay.setStyle();
+            hamMenuClicked = false;
+        }
+    }
+}
+
+function mainContentOnLoad() {
+    if(load === true) {
+        moveTitle();
     }
 }
 
@@ -282,117 +224,22 @@ function scrollFunction() {
     if (document.body.scrollTop > oneScroll*5 || document.documentElement.scrollTop > oneScroll*5) {
         checkOnScroll = true;
 
-        let aboutImageShow = new styleSetterWithTransition(aboutBoxPortrait, 'opacity', 1, 200);
-        let aboutTitleShow = new styleSetterWithTransition(aboutTitle, 'opacity', 1, 500);
-        let aboutSubtitleShow = new styleSetterWithTransition(aboutSubtitle, 'opacity', 1, 750);
-        let aboutTextShow = new styleSetterWithTransition(aboutText, 'opacity', 1, 1000);
+        scrollbutton.style.opacity = '1';
 
         moveTitle();
         eventHeaderLinks();
-        aboutImageShow.setStyle();
-        aboutTitleShow.setStyle();
-        aboutSubtitleShow.setStyle();
-        aboutTextShow.setStyle();
 
         hamburger.style.display = 'flex';
     } else {
+        scrollbutton.style.opacity = '0';
         checkOnScroll = false;
-        if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-            let hamburgerShow = new styleSetterWithTransition(hamburger, 'opacity', 1, 250);
-
-            hamburgerShow.setStyle();
-
-            mainHeaderLinks.forEach(function (x){
-                x.style.display = 'none';
-            });
-
-            hamburger.style.display = 'flex';
-        } else {
-            mainHeaderLinks.forEach(function (x){
-                x.style.display = 'block';
-            });
-
-            hamburger.style.opacity = '0';
-            hamburger.style.display = 'none';
-        }
         moveTitle();
     }
-    let scrolled = window.scrollY;
-
-    if (scrolled > oneScroll * 14) {
-        projectsFirst.style.width = `clamp(0%, 100%, 100%)`;
-    } else if(scrolled < oneScroll * 16) {
-        projectsFirst.style.width = `clamp(0%, 0%, 100%)`;
-    }
-
-    if (scrolled > oneScroll * 14 + window.innerHeight) {
-        projectsSecond.style.width = `clamp(0%, 75%, 100%)`;
-    } else if(scrolled < oneScroll * 16 + window.innerHeight) {
-        projectsSecond.style.width = `clamp(0%, 0%, 100%)`;
-    }
-
-    if (scrolled > (oneScroll * 14) + (window.innerHeight*2)) {
-        projectsThird.style.width = `clamp(0%, 75%, 100%)`;
-    } else if(scrolled < (oneScroll * 16) + (window.innerHeight*2)) {
-        projectsThird.style.width = `clamp(0%, 0%, 100%)`;
-    }
-
-    if (scrolled > (oneScroll * 14) + (window.innerHeight*3)) {
-        projectsFourth.style.width = `clamp(0%, 75%, 100%)`;
-    } else if(scrolled < (oneScroll * 16) + (window.innerHeight*3)) {
-        projectsFourth.style.width = `clamp(0%, 0%, 100%)`;
-    }
-}
-
-// Background stars
-function createBackgroundFigures() {
-    const getBgX = background.offsetWidth;
-    const getBgY = background.offsetHeight;
-    const stars_count = 500;
-
-   for(let i = 1; i <= stars_count; i++) {
-       let star = document.createElement('div');
-       const randomPosX = getRandomBetween(50, getBgX-50);
-       const randomPosY = getRandomBetween(50, getBgY-50);
-
-       star.style.top = `${randomPosY}px`;
-       star.style.left = `${randomPosX}px`;
-       starArray.push(star);
-       background.appendChild(star);
-   }
-    for(let i = 1; i <= stars_count/2; i++) {
-        let star = document.createElement('div');
-        const randomPosX = getRandomBetween(100, getBgX-100);
-        const randomPosY = getRandomBetween(100, getBgY-100);
-
-        star.style.top = `${randomPosY}px`;
-        star.style.left = `${randomPosX}px`;
-        starArrayMenu.push(star);
-        clickedMenu.appendChild(star);
-    }
-}
-
-function backgroundAnimation(event) {
-    const cX = event.clientX;
-    const cY = event.clientY;
-
-    const offsetXe = Math.min(maxMovementEx, Math.max(-maxMovementEx, (cX - window.innerWidth / 2) / window.innerWidth * maxMovementEx));
-    const offsetYe = Math.min(maxMovementEx, Math.max(-maxMovementEx, (cY - window.innerHeight / 2) / window.innerHeight * maxMovementEx));
-
-    const offsetX = Math.min(maxMovement, Math.max(-maxMovement, (cX - window.innerWidth / 2) / window.innerWidth * maxMovement));
-    const offsetY = Math.min(maxMovement, Math.max(-maxMovement, (cY - window.innerHeight / 2) / window.innerHeight * maxMovement));
-
-    starArrayMenu.forEach(function(star, index, array) {
-        if (index <= array.length/2) {
-            star.style.transform = `translate(${offsetXe}px, ${offsetYe}px)`;
-        } else {
-            star.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-        }
-    });
 }
 
 function homeSection() {window.scrollTo(0, 0);}
 function aboutSection() {aboutContent.scrollIntoView({block: 'center', behavior: 'smooth'});}
+function experienceSection() {workingContent.scrollIntoView({block: 'start', behavior: 'smooth'});}
 function projectsSection() {projectContent.scrollIntoView({block: 'center', behavior: 'smooth'});}
 function contactSection() {contactContent.scrollIntoView({block: 'center', behavior: 'smooth'});}
 function homeSectionFromHamMenu() {
@@ -401,6 +248,9 @@ function homeSectionFromHamMenu() {
 
 function aboutSectionFromHamMenu() {
     scrollToSection(aboutSection);
+}
+function workingSectionFromHamMenu() {
+    scrollToSection(experienceSection);
 }
 
 function projectsSectionFromHamMenu() {
@@ -413,61 +263,167 @@ function contactSectionFromHamMenu() {
 
 // Listeners
 hamburger.addEventListener('mouseover', function(){
-    const width = Math.abs(66.6);
     if (hamMenuClicked === false) {
-        hamFirstLine.style.width = `${width}%`;
-        hamSecondLine.style.width = `${width}%`;
+        hamFirstLine.style.transform = 'translateX(25%)';
+        hamSecondLine.style.transform = 'translatex(-25%)';
+    }
+});
+hamburger.addEventListener('mouseout', function(){
+    if (hamMenuClicked === false) {
+        hamFirstLine.style.transform = `translateY(0)`;
+        hamSecondLine.style.transform = `translateY(0)`;
     }
 });
 
-hamburger.addEventListener('mouseout', function(){
-    hamLineArray.forEach(function (elem){
-        hamFirstLine.style.width = `100%`;
-        hamSecondLine.style.width = `100%`;
+// scroll event
+document.addEventListener('scroll', function(){
+    const breakpoints = [1800, 2100, 2400, 2700, 3000, 3400, 3600];
+    const workingTitles = document.querySelectorAll('.working-text-titles');
+    const workingSubTitles = document.querySelectorAll('.working-text-subtitles');
+    let scrolled = window.scrollY;
+
+    if(scrolled <= 0) {
+        mainHeader.style.backgroundColor = 'transparent';
+
+    } else {
+        for (let i = 0; i < workingTitles.length; i++) {
+            if (scrolled >= breakpoints[i]) {
+                workingTitles[i].style.backgroundPosition = '50% 50%';
+                workingSubTitles[i].style.transform = 'translateX(0)';
+                workingSubTitles[i].style.opacity = '1';
+            } else {
+                workingSubTitles[i].style.opacity = '0';
+
+                if(i % 2 === 0) {
+                    workingTitles[i].style.backgroundPosition = '325% 50%';
+                    workingSubTitles[i].style.transform = 'translateX(-50%)';
+                } else {
+                    workingTitles[i].style.backgroundPosition = '-325% 50%';
+                    workingSubTitles[i].style.transform = 'translateX(50%)';
+                }
+            }
+        }
+
+        document.getElementById('photo').style.transform = `translateY(${-scrolled * 0.3}px)`;
+        mainHeader.style.backgroundColor = ' var(--patterin-darker)';
+    }
+});
+
+let loadBar = document.getElementById('progress-bar');
+let loadBarPercent = document.getElementById('progress-bar-content');
+let quoteCon = document.getElementById('quote');
+let startWidth = 0;
+let load = false;
+function loadingBar() {
+    frame = setInterval(frame, 45);
+    function frame() {
+        if (startWidth >= 100) {
+            load = true;
+            let line1Delay = new styleSetterWithTransition(line_1, 'opacity', '1', 1500);
+            let line2Delay = new styleSetterWithTransition(line_2, 'opacity', '1', 1700);
+            let line3Delay = new styleSetterWithTransition(line_3, 'opacity', '1', 1900);
+
+            let line1TransformDelay = new styleSetterWithTransition(line_1, 'transform', 'none', 1550);
+            let line2TransformDelay = new styleSetterWithTransition(line_2, 'transform', 'none', 1750);
+            let line3TransformDelay = new styleSetterWithTransition(line_3, 'transform', 'none', 1950);
+
+            let loadBarDelay = new styleSetterWithTransition(loadBar, 'opacity', '0', 600);
+            let quoteDelay = new styleSetterWithTransition(quoteCon, 'opacity', '0', 300);
+            loadBarDelay.setStyle();
+            quoteDelay.setStyle();
+
+            line1Delay.setStyle();
+            line2Delay.setStyle();
+            line3Delay.setStyle();
+
+            line1TransformDelay.setStyle();
+            line2TransformDelay.setStyle();
+            line3TransformDelay.setStyle();
+
+            clearInterval(frame);
+        } else {
+            startWidth++;
+            loadBar.style.width = `${startWidth}%`;
+            loadBarPercent.innerHTML = `${startWidth}%`;
+        }
+    }
+}
+
+function randomQuote() {
+    const quote1 = 'Przemądrzała mowa i wyszukane maniery rzadko towarzyszą człowiekowi spolegliwemu.';
+    const quote2 = 'Zachowanie wiedzione zyskiem to powód do wielkich skarg.';
+    const quote3 = 'Mierzyć się z ostatecznościami jest zaiste boleśnie.';
+    const quote4 = 'Ucz się, jakby wszystko było przed tobą, i ciągle obawiaj się stracić to, czegoś się nauczył.'
+    const quoteArray =[quote1, quote2, quote3, quote4];
+
+    const randInt = getRandomBetween(0, quoteArray.length);
+    quoteCon.innerHTML =
+        `<div>
+            <i>"</i><span>${quoteArray[randInt]}</span><i>"</i>
+        </div><br>
+        <h6> - Konfucjusz, Dialogi</h6>`;
+}
+
+function loadingScreens() {
+    const duration = 5500;
+    document.body.style.overflow = 'hidden';
+
+    let bodyDelay =
+        new styleSetterWithTransition(document.body, 'overflow', 'visible', duration);
+    let loaderDelay =
+        new styleSetterWithTransition(document.querySelector('.loader-load'), 'opacity', '0', duration - 750);
+    let loaderTextDelay =
+        new styleSetterWithTransition(document.getElementById('loading-screen-title'), 'opacity', '0', duration - 500);
+    let loadingScreenDelay = new styleSetterWithTransition(loadingScreen, 'width', '0%', duration);
+
+    bodyDelay.setStyle();
+    loaderDelay.setStyle();
+    loaderTextDelay.setStyle();
+    loadingScreenDelay.setStyle();
+}
+
+const projectParent = document.getElementById('projects-parent');
+const projectContent = document.getElementById('project-content');
+let projectBoxes = document.querySelectorAll('.project-box');
+projectParent.addEventListener('mousedown', function (event) {
+    projectContent.dataset.mouseDownAt = event.clientX;
+});
+projectParent.addEventListener('mouseup', function () {
+    projectContent.dataset.mouseDownAt = "0";
+    projectContent.dataset.prevPercentage = projectContent.dataset.percentage;
+});
+projectParent.addEventListener('mousemove', function (event) {
+    if (projectContent.dataset.mouseDownAt === "0") return;
+
+    const mousePos = parseFloat(projectContent.dataset.mouseDownAt) - event.clientX;
+    const mouseFinal = window.innerWidth / 2;
+
+    const percentage = (mousePos / mouseFinal) * -50;
+    const percentageFinal = parseFloat(projectContent.dataset.prevPercentage) + percentage;
+
+    projectContent.dataset.percentage = percentageFinal;
+
+    projectBoxes.forEach(function (con) {
+        con.animate({
+            backgroundPosition: `clamp(50%, ${Math.abs(50 - percentageFinal)}%, 100%) 50%`
+        }, {duration: 1200, fill: 'forwards'});
     });
+    projectContent.animate({
+        transform: `translateX(clamp(-50%, ${percentageFinal}%, 0%))`
+    }, {duration: 1200, fill: 'forwards'});
 });
 
 hamburger.addEventListener('click', hamburgerMenuInteract);
+scrollDown.addEventListener('click', function () {
+    aboutSection();
+});
 
 footerBackTop.addEventListener('click', homeSection);
 
-document.addEventListener('mousemove', backgroundAnimation);
-mainHeader.addEventListener('mousemove', backgroundAnimation);
-clickedMenu.addEventListener('mousemove', backgroundAnimation);
-
-let imgScrollScale = 0.3;
-document.addEventListener('scroll', function(x){
-    let elements = document.querySelectorAll('.scrolling');
-    let rocketFire = document.querySelector('.loader-rocket-fire');
-    let scrolled = window.scrollY;
-
-    rocketFire.style.boxShadow = `clamp(1px, ${scrolled/75}px, 15px) clamp(1px, ${scrolled/75}px, 15px) clamp(15px, ${scrolled/50}px, 25px) clamp(1px, ${scrolled/100}px, 5px) #ffc65c`;
-
-    elements.forEach(function (elem) {
-        elem.style.transform = `scale(clamp(0, ${1 - scrolled/250}, 1))`;
-    });
-
-    if(scrolled <= 0) {
-        rocketLaunch.style.transition = 'transform 0.3s ease-in-out';
-        rocketLaunch.style.transform = 'rotate(0deg)';
-    } else {
-        rocketLaunch.style.transition = 'transform 0.05s linear';
-        rocketLaunch.style.transform = `rotate(${180 - scrolled/565}deg) translate(${-scrolled * 0.05}px, ${-scrolled}px)`;
-    }
-
-    starArray.forEach(function(star, index, array) {
-        if (index <= array.length/2) {
-            star.style.transform = `translateY(${-scrolled * 0.25}px)`;
-        } else {
-            star.style.transform = `translateY(${-scrolled * 0.35}px)`;
-            star.style.backgroundColor = '#606060';
-        }
-    });
-});
-
 document.body.onload = function () {
     scrollButton();
-    addContentTitleText();
     scrollAtTop();
-    createBackgroundFigures();
+    loadingScreens();
+    loadingBar();
+    randomQuote()
 }

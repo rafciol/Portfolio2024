@@ -25,7 +25,7 @@ let clickedMenu = document.getElementById('clicked-menu');
 let elements = document.querySelectorAll('.scrolling');
 
 let loaded = false;
-let scrollbutton = document.getElementById('scroll-button');
+let scrollButton = document.getElementById('scroll-button');
 let scrollDown = document.getElementById('scroll-down');
 
 let loadingScreen = document.getElementById('loading-screen');
@@ -91,8 +91,7 @@ function moveTitle() {
 // Scroll line
 let scrollButtonText = document.getElementById('scroll-button-text');
 
-function scrollButton() {
-    let scrollButton = document.getElementById('scroll-button');
+function scrollButtonEvent() {
     let dot = document.getElementById('dot');
 
     const dot_size = 20;
@@ -224,14 +223,14 @@ function scrollFunction() {
     if (document.body.scrollTop > oneScroll*5 || document.documentElement.scrollTop > oneScroll*5) {
         checkOnScroll = true;
 
-        scrollbutton.style.opacity = '1';
+        scrollButton.style.opacity = '1';
 
         moveTitle();
         eventHeaderLinks();
 
         hamburger.style.display = 'flex';
     } else {
-        scrollbutton.style.opacity = '0';
+        scrollButton.style.opacity = '0';
         checkOnScroll = false;
         moveTitle();
     }
@@ -281,10 +280,38 @@ document.addEventListener('scroll', function(){
     const workingTitles = document.querySelectorAll('.working-text-titles');
     const workingSubTitles = document.querySelectorAll('.working-text-subtitles');
     let scrolled = window.scrollY;
+    let windowSizeY = window.innerHeight;
+    console.log(scrolled);
+
+    if (window.innerHeight + window.scrollY >= document.documentElement.offsetHeight) {
+        scrollButton.style.display = 'none';
+    } else {
+        scrollButton.style.display = 'flex';
+    }
 
     if(scrolled <= 0) {
         mainHeader.style.backgroundColor = 'transparent';
 
+    } else if(windowSizeY <= 900) {
+        for (let i = 0; i < workingTitles.length; i++) {
+            if (scrolled >= breakpoints[i] - windowSizeY) {
+                workingTitles[i].style.backgroundPosition = '50% 50%';
+                workingSubTitles[i].style.transform = 'translateX(0)';
+                workingSubTitles[i].style.opacity = '1';
+            } else {
+                workingSubTitles[i].style.opacity = '0';
+
+                if(i % 2 === 0) {
+                    workingTitles[i].style.backgroundPosition = '325% 50%';
+                    workingSubTitles[i].style.transform = 'translateX(-50%)';
+                } else {
+                    workingTitles[i].style.backgroundPosition = '-325% 50%';
+                    workingSubTitles[i].style.transform = 'translateX(50%)';
+                }
+            }
+        }
+
+        mainHeader.style.backgroundColor = ' var(--patterin-darker)';
     } else {
         for (let i = 0; i < workingTitles.length; i++) {
             if (scrolled >= breakpoints[i]) {
@@ -304,7 +331,6 @@ document.addEventListener('scroll', function(){
             }
         }
 
-        document.getElementById('photo').style.transform = `translateY(${-scrolled * 0.3}px)`;
         mainHeader.style.backgroundColor = ' var(--patterin-darker)';
     }
 });
@@ -350,10 +376,10 @@ function loadingBar() {
 }
 
 function randomQuote() {
-    const quote1 = 'Przemądrzała mowa i wyszukane maniery rzadko towarzyszą człowiekowi spolegliwemu.';
-    const quote2 = 'Zachowanie wiedzione zyskiem to powód do wielkich skarg.';
-    const quote3 = 'Mierzyć się z ostatecznościami jest zaiste boleśnie.';
-    const quote4 = 'Ucz się, jakby wszystko było przed tobą, i ciągle obawiaj się stracić to, czegoś się nauczył.'
+    const quote1 = 'Smug speech and elaborate manners rarely accompany a man of restraint...';
+    const quote2 = 'Profit-driven behavior is cause for big complaints...';
+    const quote3 = 'Facing the ultimate is indeed painful...';
+    const quote4 = 'Learn as if everything is in front of you, and constantly fear losing what you have learned...'
     const quoteArray =[quote1, quote2, quote3, quote4];
 
     const randInt = getRandomBetween(0, quoteArray.length);
@@ -361,7 +387,7 @@ function randomQuote() {
         `<div>
             <i>"</i><span>${quoteArray[randInt]}</span><i>"</i>
         </div><br>
-        <h6> - Konfucjusz, Dialogi</h6>`;
+        <h6> - Confucius, Dialogues</h6>`;
 }
 
 function loadingScreens() {
@@ -382,6 +408,7 @@ function loadingScreens() {
     loadingScreenDelay.setStyle();
 }
 
+/* Project slide animation */
 const projectParent = document.getElementById('projects-parent');
 const projectContent = document.getElementById('project-content');
 let projectBoxes = document.querySelectorAll('.project-box');
@@ -421,7 +448,7 @@ scrollDown.addEventListener('click', function () {
 footerBackTop.addEventListener('click', homeSection);
 
 document.body.onload = function () {
-    scrollButton();
+    scrollButtonEvent();
     scrollAtTop();
     loadingScreens();
     loadingBar();

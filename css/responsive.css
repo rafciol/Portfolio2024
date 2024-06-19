@@ -131,7 +131,7 @@
     /* Main section */
 
     #content-title {
-        margin-top: 25%;
+        line-height: 5rem;
     }
     #content-title h1:nth-child(1) {
         font-size: 64px!important;
@@ -141,7 +141,11 @@
     }
     #content-title h1:nth-child(3) {
         font-size: 20px!important;
-        margin-top: 25%;
+        display: flex;
+        justify-content: left;
+        align-items: flex-start;
+        flex-direction: column;
+        margin-top: 0;
     }
 
     /* About section */

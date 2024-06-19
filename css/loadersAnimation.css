@@ -82,7 +82,7 @@
     overflow: hidden;
     height: 3rem;
     background-size: 400%;
-    color: #cfcfcf;
+    color: var(--pattern-bright);
     border: 1px solid #cfcfcf;
 }
 .scroll-down:hover {
